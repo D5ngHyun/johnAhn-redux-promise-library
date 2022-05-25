@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getUser } from "./reducer/user";
 
 function App() {
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState("");
+  const onClickHandler = (e) => {
+    dispatch(getUser()).then((result) => {
+      // console.log(result.action.payload.title);
+      console.log(result.payload.title);
+      return setTitle(result.payload.title);
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Redux Practice</h1>
+      <button onClick={onClickHandler} name="dongs">
+        Click Me
+      </button>
+
+      {title ? title : "내용없음"}
+    </>
   );
 }
 
